@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from receipts.forms import ReceiptForm
-from receipts.models import Receipt
+from receipts.models import Account, ExpenseCategory, Receipt
 
 
 # Create your views here.
@@ -19,7 +19,7 @@ def show_receipt(request):
     context = {
         "receipt_list": receipts,
     }
-    return render(request, "receipts/receipt_list.html", context)
+    return render(request, "receipts/list_receipt.html", context)
 
 
 @login_required(redirect_field_name="user_login")
@@ -38,3 +38,21 @@ def create_receipt(request):
         "form": form,
     }
     return render(request, "receipts/create_receipt.html", context)
+
+
+@login_required(redirect_field_name="user_login")
+def list_expense_category(request):
+    expense_categories = ExpenseCategory.objects.filter(owner=request.user)
+    context = {
+        "expense_category_list": expense_categories,
+    }
+    return render(request, "receipts/list_category.html", context)
+
+
+@login_required(redirect_field_name="user_login")
+def list_account(request):
+    accounts = Account.objects.filter(owner=request.user)
+    context = {
+        "account_list": accounts,
+    }
+    return render(request, "receipts/list_accounts.html", context)
