@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from django.contrib.auth.decorators import login_required
 from receipts.models import Receipt
 
 
@@ -12,8 +12,9 @@ from receipts.models import Receipt
 #     return render(request, "receipts/receipt_list.html", context)
 
 
+@login_required(redirect_field_name="user_login")
 def show_receipt(request):
-    receipts = Receipt.objects.all()
+    receipts = Receipt.objects.filter(purchaser=request.user)
     context = {
         "receipt_list": receipts,
     }
