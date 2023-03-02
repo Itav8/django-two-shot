@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
-from receipts.forms import ReceiptForm
+from receipts.forms import CategoryForm, ReceiptForm
 from receipts.models import Account, ExpenseCategory, Receipt
 
 
@@ -56,3 +56,21 @@ def list_account(request):
         "account_list": accounts,
     }
     return render(request, "receipts/list_accounts.html", context)
+
+
+@login_required(redirect_field_name="user_login")
+def create_category(request):
+    if request.method == "POST":
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            category = form.save(False)
+            category.owner = request.user
+            category.save()
+            return redirect("category_list")
+    else:
+        form = CategoryForm()
+
+    context = {
+        "form": form,
+    }
+    return render(request, "receipts/create_category.html", context)
