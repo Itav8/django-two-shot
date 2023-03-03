@@ -34,6 +34,12 @@ def create_receipt(request):
     else:
         form = ReceiptForm()
 
+    form.fields["account"].queryset = Account.objects.filter(
+        owner=request.user
+    )
+    form.fields["category"].queryset = ExpenseCategory.objects.filter(
+        owner=request.user
+    )
     context = {
         "form": form,
     }

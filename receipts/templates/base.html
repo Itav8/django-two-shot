@@ -14,6 +14,24 @@
                     <li>
                         <a href="{% url 'logout' %}">Logout</a>
                     </li>
+                    <li>
+                        <a href="{% url 'create_account' %}">Create Account</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'create_category' %}">Create Category</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'create_receipt' %}">Create Receipt</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'home' %}">My Receipts</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'account_list' %}">My Accounts</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'category_list' %}">My Categories</a>
+                    </li>
                     {% else %}
                     <li>
                         <a href="{% url 'signup' %}">Sign Up</a>
